@@ -1,15 +1,22 @@
 <template>
-  <div class="q-pa-md" style="max-width: 300px" padding>
+  <div class="fixed-center q-pa-lg" style="max-width: 300px" padding>
     <q-form
       @submit="onSubmit"
       @reset="onReset"
       class="q-gutter-md"
     >
+      <q-select
+        label="Sector"
+        v-model= "seleccion"
+        :options="opciones"
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
+      />
+
       <q-input
         filled
         v-model="name"
-        label="Nombre *"
-        hint="Nombre"
+        label="Nombre Completo *"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
       />
@@ -18,7 +25,6 @@
         filled
         v-model="surname"
         label="Apellido *"
-        hint="Apellido"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
       />
@@ -26,16 +32,26 @@
       <q-input
         filled
         type="number"
-        v-model="age"
-        label="Edad *"
-        lazy-rules
-        :rules="[
-          val => val !== null && val !== '' || 'Por favor ingrese un valor al campo',
-          val => val > 0 && val < 100 || 'Por favor ingrese su edad correcta'
-        ]"
+        step="1"
+        min="0"
+        v-model="legajo"
+        label="Numero de Legajo *"
+        hint="Solo se permiten números en este campo"
+        :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
       />
 
-      <q-toggle v-model="accept" label="I accept the license and terms" />
+      <q-input
+        filled
+        type="number"
+        step="1"
+        min="0"
+        v-model="documento"
+        label="Numero de Documento *"
+        hint="Ingresar números sin puntos"
+        :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
+      />
+
+      <q-toggle v-model="termino" label="Por favor acepte los terminos para continuar" />
 
       <div>
         <q-btn label="Registrarse" type="submit" color="primary"/>
@@ -53,20 +69,27 @@ export default {
     const $q = useQuasar()
     const name = ref(null)
     const surname = ref (null)
-    const age = ref(null)
-    const accept = ref(false)
+    const legajo = ref(null)
+    const documento = ref(null)
+    const termino = ref(false)
+    const seleccion = ref(null)
+    const opciones = ['Sup. Ventas', 'Sup. Administracion', 'Sup. Caja', 'Ventas','Administracion','Caja']
     return {
       name,
       surname,
-      age,
-      accept,
+      legajo,
+      documento,
+      termino,
+      seleccion,
+      opciones,
       onSubmit () {
-        if (accept.value !== true) {
+        console.log ('estoy aqui')
+        if (termino.value === false) {
           $q.notify({
             color: 'red-5',
             textColor: 'white',
             icon: 'warning',
-            message: 'You need to accept the license and terms first'
+            message: 'Por favor acepte los terminos para poder continuar'
           })
         }
         else {
@@ -74,15 +97,17 @@ export default {
             color: 'green-4',
             textColor: 'white',
             icon: 'cloud_done',
-            message: 'Submitted'
+            message: 'Usuario registrado con exito'
           })
         }
       },
       onReset () {
         name.value = null
         surname.value = null
-        age.value = null
-        accept.value = false
+        legajo.value = null
+        documento.value = null
+        termino.value = false
+        seleccion.value = null
       }
     }
   }

@@ -1,44 +1,116 @@
 <template>
-  <q-page class="bg-light-blue window-height window-width row justify-center items-center">
-    <div class="column">
-      <div class="row">
-        <h5 class="text-h5 text-white q-my-md">Ingresá a tu cuenta</h5>
-      </div>
-      <div class="row">
-        <q-card square bordered class="q-pa-lg shadow-1">
-          <q-card-section>
-            <q-form class="q-gutter-md">
-              <q-input square filled clearable v-model="email" type="email" label="email" />
-              <q-input square filled clearable v-model="password" type="password" label="password" />
-            </q-form>
-          </q-card-section>
-          <q-card-actions class="q-px-md">
-            <q-btn unelevated color="light-green-7" size="lg" class="full-width" label="Login" />
-          </q-card-actions>
-          <q-card-actions class="q-px-md"  to="/registro" >
-            <q-btn unelevated color="light-blue-7" size="lg" class="full-width" label="Registrate"/>
-          </q-card-actions>
+  <q-page-container style="background-color:#3393FF">
+    <q-page>
+      <q-form @submit="onSubmit">
+        <q-card class="fixed-center q-pa-lg" style="width:450px">
+          <q-list>
+            <q-item>
+              <q-input
+                autofocus
+                square
+                filled
+                clearable
+                v-model="mail"
+                style="width:100%;background:white"
+                type="text"
+                label="usuario"
+                />
+            </q-item>
+            <q-item>
+              <q-input
+                square
+                clearable
+                filled
+                v-model="password"
+                :type="isPwd ? 'password' : 'text'"
+                style="width:100%;background:white"
+                label="contraseña"
 
+
+                >
+                <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                </template>
+              </q-input>
+            </q-item>
+            <q-item>
+              <q-btn
+                type="submit"
+                to="/facturacion"
+                unelevated
+                color="light-green-7"
+                size="lg"
+                class="full-width"
+                label="Login"
+              />
+            </q-item>
+            <q-item>
+              <q-btn
+                to="/registrarse"
+                unelevated
+                color="light-blue-7"
+                size="lg"
+                class="full-width"
+                label="Registrate"
+              />
+            </q-item>
+          </q-list>
         </q-card>
-      </div>
-    </div>
-  </q-page>
+      </q-form>
+    </q-page>
+  </q-page-container>
 </template>
 
 <script>
-export default {
-  name: 'Login-page',
-  data () {
-    return {
-      email: '',
-      password: ''
-    }
+import { ref } from 'vue'
+import { Notify } from 'quasar'
+import { api } from 'src/boot/axios'
+import { LocalStorage } from 'quasar'
+
+
+
+  export default {
+    setup () {
+        const mail = ref('')
+        const password = ref ('')
+        const isPwd = ref ('true')
+        return {
+            onSubmit () {
+              api.post('/loginOK', {
+                  mail: 'anaal@gmail.com',
+                  password: 'benja1022'
+              })
+              .then(function (res) {
+                  const Token = res.data.data.token;
+                  LocalStorage.set('token',Token);
+                  console.log(Token);
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+
+              /*
+              console.log('ingresa');
+              if (!this.user || !this.password) {
+                Notify.create({
+                  message: 'Ingrese los datos'
+                })
+              } else {
+                this.$store.dispatch('usr/login', {
+                  usuario: this.user,
+                  pass: this.password,
+                }).then(res)({
+                  usuario: res
+                })
+              }*/
+            }
+        }
+      }
   }
-}
 </script>
 
-<style>
-.q-card {
-  width: 360px;
-}
-</style>
+

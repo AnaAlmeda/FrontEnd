@@ -4,54 +4,89 @@
       <q-header elevated class="bg-black">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>Bienvenido</q-toolbar-title>
+          <q-toolbar-title>Bienvenid@</q-toolbar-title>
         </q-toolbar>
       </q-header>
 
       <q-drawer
         v-model="drawer"
         show-if-above
+
+        :mini="miniState"
+        @mouseover="miniState = false"
+        @mouseout="miniState = true"
+
         :width="200"
         :breakpoint="500"
+        bordered
+        class="bg-grey-3"
       >
         <q-scroll-area class="fit">
-          <q-list padding class="menu-list">
+          <q-list padding>
             <q-item clickable v-ripple to = "/registrarse">
-              <q-item-section avatar>
-                <q-icon name="inbox" />
+              <q-item-section avatar style="min-width: 25px">
+
+                <i style="width:10px" class="fa-duotone fa-futbol"></i>
               </q-item-section>
 
-              <q-item-section>
+              <q-item-section style="width:5px">
                 Registrate
               </q-item-section>
             </q-item>
 
             <q-item active clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="star" />
+              <q-item-section avatar style="min-width: 25px">
+                <i style="width:5px" class="fa-duotone fa-futbol"></i>
               </q-item-section>
-
-              <q-item-section>
+              <q-item-section style="width:5px">
                 Calendario
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple to="/facturacion">
               <q-item-section avatar>
                 <q-icon name="send" />
               </q-item-section>
 
               <q-item-section>
-                Salir
+                Facturacion
               </q-item-section>
             </q-item>
+
+            <q-item clickable v-ripple to="/ventas">
+              <q-item-section avatar>
+                <q-icon name="send" />
+              </q-item-section>
+              <q-item-section>
+                Ventas
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/Deposito">
+              <q-item-section avatar>
+                <q-icon name="send" />
+              </q-item-section>
+
+              <q-item-section>
+                Depósito
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/Tecnica">
+                <q-item-section avatar>
+                  <q-icon name="send" />
+                </q-item-section>
+
+                <q-item-section>
+                  Dpto. Técnico
+                </q-item-section>
+              </q-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>
 
       <q-page-container>
         <q-page padding>
-          <router-view />
+          <router-view/>
         </q-page>
       </q-page-container>
     </q-layout>
@@ -60,16 +95,13 @@
 
 <script>
 import { ref } from 'vue'
+
 export default {
   setup () {
     return {
-      drawer: ref(false)
+      drawer: ref(false),
+      miniState: ref(true)
     }
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.menu-list .q-item
-  border-radius: 0 32px 32px 0
-</style>
