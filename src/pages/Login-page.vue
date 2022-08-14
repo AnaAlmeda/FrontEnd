@@ -1,8 +1,8 @@
 <template>
-  <q-page-container style="background-color:#3393FF">
+  <q-page-container style="background-color: #3393ff">
     <q-page>
-      <q-form @submit="onSubmit">
-        <q-card class="fixed-center q-pa-lg" style="width:450px">
+      <q-form @submit="logueo">
+        <q-card class="fixed-center q-pa-lg" style="width: 450px">
           <q-list>
             <q-item>
               <q-input
@@ -11,10 +11,14 @@
                 filled
                 clearable
                 v-model="mail"
-                style="width:100%;background:white"
+                style="width: 100%; background: white"
                 type="text"
                 label="usuario"
-                />
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Por favor escriba algo',
+                  (val) => /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(val) ||'Formato Email incorrecto',
+                  ]"
+              />
             </q-item>
             <q-item>
               <q-input
@@ -23,25 +27,25 @@
                 filled
                 v-model="password"
                 :type="isPwd ? 'password' : 'text'"
-                style="width:100%;background:white"
+                style="width: 100%; background: white"
                 label="contraseña"
-
-
-                >
+                :rules="[
+                     (val) => (val && val.length > 5) || 'Contraseña mayor a 6 carácteres',]"
+              >
                 <template v-slot:append>
-                    <q-icon
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
+                  <q-icon
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
                 </template>
               </q-input>
             </q-item>
             <q-item>
               <q-btn
-                type="submit"
-                to="/facturacion"
                 unelevated
+                type = "submit"
+
                 color="light-green-7"
                 size="lg"
                 class="full-width"
@@ -65,52 +69,44 @@
   </q-page-container>
 </template>
 
-<script>
-import { ref } from 'vue'
-import { Notify } from 'quasar'
-import { api } from 'src/boot/axios'
-import { LocalStorage } from 'quasar'
+<script setup>
+import {useUserStore} from "../pinia/user-store";
+import { ref } from "vue";
+import {useRouter} from "vue-router";
+import { useQuasar } from 'quasar';
 
 
+    const $q = useQuasar();
+    const user = useUserStore();
+    const router = useRouter()
+    const isPwd = ref('true');
+    const mail = ref ('')
+    const password = ref('')
 
-  export default {
-    setup () {
-        const mail = ref('')
-        const password = ref ('')
-        const isPwd = ref ('true')
-        return {
-            onSubmit () {
-              api.post('/loginOK', {
-                  mail: 'anaal@gmail.com',
-                  password: 'benja1022'
-              })
-              .then(function (res) {
-                  const Token = res.data.data.token;
-                  LocalStorage.set('token',Token);
-                  console.log(Token);
-              })
-              .catch(function (error) {
-                  console.log(error);
-              });
+    const logueo = async () =>{
 
-              /*
-              console.log('ingresa');
-              if (!this.user || !this.password) {
-                Notify.create({
-                  message: 'Ingrese los datos'
-                })
-              } else {
-                this.$store.dispatch('usr/login', {
-                  usuario: this.user,
-                  pass: this.password,
-                }).then(res)({
-                  usuario: res
-                })
-              }*/
-            }
+      if (!mail.value || !password.value){
+        $q.notify({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'warning',
+            message: 'Tiene campos sin completar'
+          })
+      }else {
+        try {
+          //console.log('entra aqui')
+          await user.access(mail.value,password.value);
+          router.push("/adm");
+
+        } catch (error) {
+          $q.notify({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'warning',
+            message: error
+          })
         }
       }
-  }
+    }
+
 </script>
-
-

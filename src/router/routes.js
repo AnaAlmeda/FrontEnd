@@ -38,10 +38,10 @@ const routes = [
         component: () => import('pages/Form-client.vue')
       },
       {
-        name:'facturacion',
-        path: '/facturacion',
-        meta: {title: 'Facturacion'},
-        component: () => import('pages/Facturacion-page.vue')
+        name:'proyectos',
+        path: '/proyectos',
+        meta: {title: 'Proyectos'},
+        component: () => import('pages/Proyectos-page.vue')
       }
     ]
   },
