@@ -27,7 +27,7 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
-
+/*
   Router.beforeEach((to, from, next)=> {
     if(localStorage.getItem('token') === null){
       if(to.path === '/login'){
@@ -42,7 +42,9 @@ export default route(function (/* { store, ssrContext } */) {
         next();
       }
     }
-  })
+  })*/
+
+
 
 
   const DEFAULT_TITLE = "CCC"

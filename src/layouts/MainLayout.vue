@@ -27,10 +27,9 @@
               <q-item-section avatar style="min-width: 25px">
 
                 <i style="width:10px" class="fa-duotone fa-futbol"></i>
-              </q-item-section>
-
+            </q-item-section>
               <q-item-section style="width:5px">
-                Registrate
+                Calendario
               </q-item-section>
             </q-item>
 
@@ -39,7 +38,7 @@
                 <i style="width:5px" class="fa-duotone fa-futbol"></i>
               </q-item-section>
               <q-item-section style="width:5px">
-                Calendario
+                Proyectos
               </q-item-section>
             </q-item>
 
@@ -49,7 +48,7 @@
               </q-item-section>
 
               <q-item-section>
-                Facturacion
+                Proveedores
               </q-item-section>
             </q-item>
 
@@ -58,7 +57,7 @@
                 <q-icon name="send" />
               </q-item-section>
               <q-item-section>
-                Ventas
+                Equipos
               </q-item-section>
             </q-item>
             <q-item clickable v-ripple to="/Deposito">
@@ -70,16 +69,6 @@
                 Depósito
               </q-item-section>
             </q-item>
-
-            <q-item clickable v-ripple to="/Tecnica">
-                <q-item-section avatar>
-                  <q-icon name="send" />
-                </q-item-section>
-
-                <q-item-section>
-                  Dpto. Técnico
-                </q-item-section>
-              </q-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>

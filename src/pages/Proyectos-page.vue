@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-table
-      title="Facturación"
+      title="Proyectos"
       :rows="rows"
       :columns="columns"
       row-key="id"
@@ -35,7 +35,7 @@ const columns = [
     format: val => `${val}`,
     sortable: true
   },
-  { name: 'periodo', align: 'center', label: 'Período', field: 'periodo', sortable: true },
+  { name: 'fecha', align: 'center', label: 'Fecha', field: 'fecha', sortable: true },
   { name: 'numfact', label: 'Factura N°', field: 'numfact', sortable: true },
   { name: 'fechavenc', label: 'Fecha de Venc', field: 'fechavenc', sortable: true },
   { name: 'estado', label: 'Estado', field: 'estado', sortable: true }
