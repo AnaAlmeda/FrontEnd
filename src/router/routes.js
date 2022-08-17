@@ -32,10 +32,22 @@ const routes = [
         component: () => import('pages/Administrativo-page.vue')
       },
       {
+        name: 'circular',
+        path: '/circular',
+        meta: {title: 'circular'},
+        component: () => import('pages/aplicacion-page.vue')
+      },
+      {
         name: 'formProyecto',
         path: '/formProyecto',
         meta: {title: 'Alta Proyectos'},
         component: () => import('pages/Project-form.vue')
+      },
+      {
+        name: 'pdf',
+        path: '/pdf',
+        meta: {title: 'Archivo pdf'},
+        component: () => import('pages/pdf-page.vue')
       },
       {
         name:'proyectos',

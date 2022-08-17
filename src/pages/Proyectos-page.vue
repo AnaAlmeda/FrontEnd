@@ -1,25 +1,28 @@
 <template>
-  <div class="q-pa-md">
-    <q-table
-      title="Proyectos"
-      :rows="rows"
-      :columns="columns"
-      row-key="id"
-      v-model:pagination="pagination"
-      :loading="loading"
-      :filter="filter"
-      @request="onRequest"
-      binary-state-sort
-    >
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar" hint="Buscar por N° usuario-apellido">
-          <template v-slot:append>
-            <q-icon name="Search" />
-          </template>
-        </q-input>
-      </template>
-    </q-table>
-  </div>
+  <q-form>
+    
+    <div class="q-pa-md">
+      <q-table
+        title="Proyectos"
+        :rows="rows"
+        :columns="columns"
+        row-key="id"
+        v-model:pagination="pagination"
+        :loading="loading"
+        :filter="filter"
+        @request="onRequest"
+        binary-state-sort
+      >
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar" hint="Buscar por N° usuario-apellido">
+            <template v-slot:append>
+              <q-icon name="Search" />
+            </template>
+          </q-input>
+        </template>
+      </q-table>
+    </div>
+  </q-form>
 </template>
 
 <script>
