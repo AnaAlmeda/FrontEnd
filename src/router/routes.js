@@ -32,10 +32,10 @@ const routes = [
         component: () => import('pages/Administrativo-page.vue')
       },
       {
-        name: 'formcliente',
-        path: '/formcliente',
-        meta: {title: 'Alta Cliente'},
-        component: () => import('pages/Form-client.vue')
+        name: 'formProyecto',
+        path: '/formProyecto',
+        meta: {title: 'Alta Proyectos'},
+        component: () => import('pages/Project-form.vue')
       },
       {
         name:'proyectos',
