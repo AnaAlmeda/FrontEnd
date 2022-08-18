@@ -94,9 +94,9 @@ import { useQuasar } from 'quasar';
           })
       }else {
         try {
-          //console.log('entra aqui')
+          mail.value.replace(' ','');
           await user.access(mail.value,password.value);
-          router.push("/adm");
+          router.push("/proyectos");
 
         } catch (error) {
           $q.notify({

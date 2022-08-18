@@ -32,16 +32,28 @@ const routes = [
         component: () => import('pages/Administrativo-page.vue')
       },
       {
-        name: 'formcliente',
-        path: '/formcliente',
-        meta: {title: 'Alta Cliente'},
-        component: () => import('pages/Form-client.vue')
+        name: 'circular',
+        path: '/circular',
+        meta: {title: 'circular'},
+        component: () => import('pages/aplicacion-page.vue')
+      },
+      {
+        name: 'formProyecto',
+        path: '/formProyecto',
+        meta: {title: 'Alta Proyectos'},
+        component: () => import('pages/Project-form.vue')
+      },
+      {
+        name: 'pdf',
+        path: '/pdf',
+        meta: {title: 'Archivo pdf'},
+        component: () => import('pages/pdf-page.vue')
       },
       {
         name:'proyectos',
         path: '/proyectos',
         meta: {title: 'Proyectos'},
-        component: () => import('pages/Proyectos-page.vue')
+        component: () => import('pages/Projects-page.vue')
       }
     ]
   },

@@ -25,8 +25,7 @@
           <q-list padding>
             <q-item clickable v-ripple to = "/registrarse">
               <q-item-section avatar style="min-width: 25px">
-
-                <i style="width:10px" class="fa-duotone fa-futbol"></i>
+                <i style="width:20px" class="fas fa-calendar"></i>
             </q-item-section>
               <q-item-section style="width:5px">
                 Calendario
@@ -35,7 +34,7 @@
 
             <q-item active clickable v-ripple>
               <q-item-section avatar style="min-width: 25px">
-                <i style="width:5px" class="fa-duotone fa-futbol"></i>
+                <i style="width:20px" class="fas fa-chart-line"></i>
               </q-item-section>
               <q-item-section style="width:5px">
                 Proyectos
@@ -44,7 +43,7 @@
 
             <q-item clickable v-ripple to="/facturacion">
               <q-item-section avatar>
-                <q-icon name="send" />
+                <i style="width:20px" class="fas fa-dolly"></i>
               </q-item-section>
 
               <q-item-section>

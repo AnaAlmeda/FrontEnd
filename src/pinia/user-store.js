@@ -8,7 +8,7 @@ import { LocalStorage } from "quasar";
 export const useUserStore = defineStore ('user',() => {
 
   const access = async (mail, password) => {
-    console.log('ingresa en el async');
+    //console.log('ingresa en el async');
     try{
       const res = await api.post("/loginOK", {
         mail: mail,
