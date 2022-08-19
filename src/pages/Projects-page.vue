@@ -28,6 +28,22 @@
             </template>
           </q-input>
         </template>
+        <template v-slot:body-cell-acciones="props">
+          <q-td>
+            <q-btn-group unelevated split class="row flex-center bg-grey-2 text-grey-8" style="border: 1px;" solid>
+              <q-btn flat style="width:50%" class="q-px-sm" @click="detalle(props)" size="1.3em">
+                  <i  class="fas fa-bars"></i>
+                  <q-tooltip content-class="text-black" content-style="font-size: 10px;border: 1px solid"></q-tooltip>
+              </q-btn>
+
+
+            </q-btn-group>
+
+          </q-td>
+
+
+
+        </template>
       </q-table>
 
     </q-item>
