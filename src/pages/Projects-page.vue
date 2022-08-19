@@ -22,7 +22,7 @@
         binary-state-sort
       >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar" hint="Buscar por N° usuario-apellido">
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar">
             <template v-slot:append>
               <q-icon name="Search" />
             </template>
@@ -38,20 +38,49 @@
 import { ref, onMounted } from 'vue'
 
 const columns = [
-  {
-    name: 'pagar',
-    required: true,
-    label: 'A pagar',
-    align: 'left',
-    field: row => row.name,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'fecha', align: 'center', label: 'Fecha', field: 'fecha', sortable: true },
-  { name: 'numfact', label: 'Factura N°', field: 'numfact', sortable: true },
-  { name: 'fechavenc', label: 'Fecha de Venc', field: 'fechavenc', sortable: true },
-  { name: 'estado', label: 'Estado', field: 'estado', sortable: true }
+    {
+      name: 'proyecto',
+      required: true,
+      label: 'Proyecto',
+      align: 'left',
+      field: row => row.name,
+      format: val => `${val}`,
+      sortable: true
+    },
+    {
+      name: 'fecha',
+      align: 'center',
+      label: 'Fecha',
+      field: 'fecha',
+      sortable: true
+    },
+    {
+      name: 'numfact',
+      label: 'Factura N°',
+      field: 'numfact',
+      sortable: true
+    },
+    {
+      name: 'fechavenc',
+      label: 'Fecha de Venc',
+      field: 'fechavenc',
+      sortable: true
+    },
+    {
+      name: 'estado',
+      label: 'Estado',
+      field: 'estado',
+      sortable: true
+    },
+    {
+      name: 'acciones',
+      label: 'Acciones',
+      align: 'center',
+      field: 'acciones'
+    }
 ]
+
+const row = []
 
 
 

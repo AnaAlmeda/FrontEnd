@@ -200,7 +200,7 @@
               type="number"
               step="any"
               min="0"
-              v-model="hDatosTV"
+              v-model="hDatosyTV"
               label="Headend Datos y TV *"
               style="width:30%"
               :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
@@ -219,7 +219,7 @@
           </q-item>
 
           <q-item>
-             <q-select outlined v-model="opciones_estado" :option="estado" label="Estado" />
+             <q-select outlined v-model="opciones_estado" :options="estado" label="Estado" />
           </q-item>
           <q-item>
             <q-input
@@ -359,7 +359,9 @@ export default {
       }
 
     const costoTotaldeRedDatosyTV = () =>{
-      costoTRDyTV.value = trunc(add(hDatosTV.value, costoTRed.value),2);
+      costoTRDyTV.value = trunc(add(hDatosyTV.value, costoTRed.value),2);
+      costoMHDyTV.value = trunc(divide(costoTRDyTV.value, manzanas.value), 2);
+      costoCHDyTV.value = trunc(divide(costoTRDyTV.value, casas.value), 2);
     }
 
     const trunc = (x, posiciones = 0) => {
@@ -371,6 +373,7 @@ export default {
       }
 
     const guardarDatos = async () => {
+      console.log(opciones_estado.value);
       try{
         const res = await api.post("/altaProyecto", {
           nombreProyecto: nombreProyecto.value,
@@ -386,20 +389,23 @@ export default {
           costoTRyD: costoTRyD.value,
           costoMHD: costoMHD.value,
           costoCHD: costoCHD.value,
-          hDatosyTV: hDatosTV.value,
+          hDatosyTV: hDatosyTV.value,
           costoTRDyTV: costoTRDyTV.value,
           costoMHDyTV: costoMHDyTV.value,
           costoCHDyTV: costoCHDyTV.value,
           fActivas: fActivas.value,
           conexionesP: conexionesP.value,
           comentarios: comentarios.value,
-          estado: estado.value
-
+          estado: opciones_estado.value
         });
+        $q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Usuario registrado con exito'
+        })
         console.log('devuelve el res.data');
-        console.log (res.data.data.token);
-        console.log('ingresa al localstorage');
-        LocalStorage.set('token',res.data.data.token);
+        console.log (res.data);
       }catch(error){
         if (error.response) {
           console.log('este es error.data');
@@ -460,7 +466,7 @@ export default {
       costoTRyD,
       costoMHD,
       costoCHD,
-      hDatosTV,
+      hDatosyTV,
       costoTRDyTV,
       costoMHDyTV,
       costoCHDyTV,
