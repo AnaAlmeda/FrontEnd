@@ -18,7 +18,7 @@
         v-model:pagination="pagination"
         :loading="loading"
         :filter="filter"
-        @request="onRequest"
+        @request="cargaDatos"
         binary-state-sort
       >
         <template v-slot:top-right>
@@ -36,6 +36,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import { api } from '../boot/axios'
 
 const columns = [
     {
@@ -80,7 +81,7 @@ const columns = [
     }
 ]
 
-const row = []
+const originalRows = []
 
 
 
@@ -97,7 +98,6 @@ export default {
       rowsNumber: 10
     })
 
-    // emulate ajax call
     // SELECT * FROM ... WHERE...LIMIT...
     function fetchFromServer (startRow, count, filter, sortBy, descending) {
       const data = filter
@@ -135,43 +135,53 @@ export default {
       return count
     }
 
-    function onRequest (props) {
-      const { page, rowsPerPage, sortBy, descending } = props.pagination
-      const filter = props.filter
+    //cargar los datos en la tabla
+    const cargaDatos = async(props) =>{
+      try {
+        const res = await api.get("/allProyectos");
+        console.log(res);
 
-      loading.value = true
+        const { page, rowsPerPage, sortBy, descending } = props.pagination
+        const filter = props.filter
 
-      // emulate server
-      setTimeout(() => {
-        // update rowsCount with appropriate value
-        pagination.value.rowsNumber = getRowsNumberCount(filter)
+        loading.value = true
 
-        // get all rows if "All" (0) is selected
-        const fetchCount = rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage
+        // emulate server
+        setTimeout(() => {
+          // update rowsCount with appropriate value
+          pagination.value.rowsNumber = getRowsNumberCount(filter)
 
-        // calculate starting row of data
-        const startRow = (page - 1) * rowsPerPage
+          // get all rows if "All" (0) is selected
+          const fetchCount = rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage
 
-        // fetch data from "server"
-        const returnedData = fetchFromServer(startRow, fetchCount, filter, sortBy, descending)
+          // calculate starting row of data
+          const startRow = (page - 1) * rowsPerPage
 
-        // clear out existing data and add new
-        rows.value.splice(0, rows.value.length, ...returnedData)
+          // fetch data from "server"
+          const returnedData = fetchFromServer(startRow, fetchCount, filter, sortBy, descending)
 
-        // don't forget to update local pagination object
-        pagination.value.page = page
-        pagination.value.rowsPerPage = rowsPerPage
-        pagination.value.sortBy = sortBy
-        pagination.value.descending = descending
+          // clear out existing data and add new
+          rows.value.splice(0, rows.value.length, ...returnedData)
 
-        // ...and turn of loading indicator
-        loading.value = false
-      }, 1500)
+          // don't forget to update local pagination object
+          pagination.value.page = page
+          pagination.value.rowsPerPage = rowsPerPage
+          pagination.value.sortBy = sortBy
+          pagination.value.descending = descending
+
+          // ...and turn of loading indicator
+          loading.value = false
+        }, 1500)
+
+      } catch (error) {
+
+      }
+
     }
 
     onMounted(() => {
       // get initial data from server (1st page)
-      onRequest({
+      cargaDatos({
         pagination: pagination.value,
         filter: undefined
       })
@@ -184,7 +194,7 @@ export default {
       columns,
       rows,
 
-      onRequest
+      cargaDatos
     }
   }
 }
