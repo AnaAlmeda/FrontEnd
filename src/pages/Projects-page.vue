@@ -40,9 +40,6 @@
             </q-btn-group>
 
           </q-td>
-
-
-
         </template>
       </q-table>
 
@@ -56,31 +53,36 @@ import { api } from '../boot/axios'
 
 const columns = [
     {
-      name: 'proyecto',
+      name: 'nombreProyecto',
       required: true,
       label: 'Proyecto',
       align: 'left',
-      field: row => row.name,
-      format: val => `${val}`,
+      field: 'nombreProyecto',
       sortable: true
     },
     {
-      name: 'fecha',
+      name: 'fechaCreacion',
       align: 'center',
-      label: 'Fecha',
-      field: 'fecha',
+      label: 'Fecha de Creación',
+      field: 'fechaCreacion',
       sortable: true
     },
     {
-      name: 'numfact',
-      label: 'Factura N°',
-      field: 'numfact',
+      name: 'costoTRed',
+      label: 'Costo Total de Red',
+      field: 'costoTRed',
       sortable: true
     },
     {
-      name: 'fechavenc',
-      label: 'Fecha de Venc',
-      field: 'fechavenc',
+      name: 'costoTRyD',
+      label: 'Costo Red y Datos',
+      field: 'costoTRyD',
+      sortable: true
+    },
+    {
+      name: 'costoTRDyTV',
+      label: 'Costo Red, Datos y Tv',
+      field: 'costoTRDyTV',
       sortable: true
     },
     {
@@ -155,7 +157,15 @@ export default {
     const cargaDatos = async(props) =>{
       try {
         const res = await api.get("/allProyectos");
-        console.log(res);
+        if(res.data.data.length){
+          for (let j=0; j<res.data.data.length; j++){
+            console.log(j);
+            console.log(res.data.data.length);
+            console.log(res.data.data[j]);
+            originalRows.push(res.data.data[j]);
+
+          }
+         }
 
         const { page, rowsPerPage, sortBy, descending } = props.pagination
         const filter = props.filter
@@ -164,6 +174,8 @@ export default {
 
         // emulate server
         setTimeout(() => {
+          console.log (filter);
+          console.log('entro en el filtro');
           // update rowsCount with appropriate value
           pagination.value.rowsNumber = getRowsNumberCount(filter)
 

@@ -167,8 +167,7 @@
               style="width:30%"
               :rules="[ val => val && val.length > 0 || 'Por favor ingrese datos al campo']"
             />
-          </q-item>
-          <q-item>
+
             <q-input
               filled
               disable
@@ -298,8 +297,7 @@
               color="primary"
               flat
               class="q-ml-sm" />
-          </q-item>
-          <q-item>
+              
             <q-btn
               label="guardar"
               style="width:30%"
