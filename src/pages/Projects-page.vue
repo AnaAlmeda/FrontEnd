@@ -156,6 +156,7 @@ export default {
     //cargar los datos en la tabla
     const cargaDatos = async(props) =>{
       try {
+
         const res = await api.get("/allProyectos");
         if(res.data.data.length){
           for (let j=0; j<res.data.data.length; j++){
@@ -166,7 +167,7 @@ export default {
 
           }
          }
-
+        //originalRows = [];
         const { page, rowsPerPage, sortBy, descending } = props.pagination
         const filter = props.filter
 
